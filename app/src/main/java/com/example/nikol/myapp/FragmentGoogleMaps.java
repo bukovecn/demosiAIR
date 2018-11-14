@@ -7,13 +7,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class FragmentExample extends Fragment {
+public class FragmentGoogleMaps extends Fragment {
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.contact_view_frag, container, false);
-
+        return inflater.inflate(R.layout.google_maps, container, false);
     }
 }
