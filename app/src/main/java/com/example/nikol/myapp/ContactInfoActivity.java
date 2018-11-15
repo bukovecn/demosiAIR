@@ -12,6 +12,7 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import butterknife.ButterKnife;
@@ -28,13 +29,14 @@ public class ContactInfoActivity extends AppCompatActivity implements Navigation
 
         ButterKnife.bind(this);
 
-        mDrawerLayout = findViewById(R.id.drawer_layout);
-        mToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
+        mDrawerLayout = findViewById(R.id.drawer_layout);
+        mToggle = new ActionBarDrawerToggle(
+                this, mDrawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         mDrawerLayout.addDrawerListener(mToggle);
         mToggle.syncState();
-
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
@@ -47,12 +49,22 @@ public class ContactInfoActivity extends AppCompatActivity implements Navigation
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        mToggle.syncState();
+    }
 
-       if(mToggle.onOptionsItemSelected(item)){
-            return  true;
-       }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        //mToggle.onOptionsItemSelected(item);
+        switch (item.getItemId()) {
+            case R.id.nav_item_all_contacts:
+                Intent intent = new Intent(this, MainActivity.class);
+                startActivity(intent);
+                return true;
+        }
         return super.onOptionsItemSelected(item);
+
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
